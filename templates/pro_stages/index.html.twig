@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Derniers stages publiés
+{% endblock %}
+
+{% block contenu %}
+  <h1>Bienvenue sur Prostages</h1>
+  <h3>Tous les stages proposés</h3>
+  <br />
+
+    {% for stageCourant in stages %}
+
+      {# Afficher une carte pour le stage courant #}
+      <div class="card">
+        <h5 class="card-header">{{stageCourant.entreprise.nom}}</h5>
+        <div class="card-body">
+          <h5 class="card-title">{{stageCourant.intitule}}</h5>
+          <p class="card-text">{{stageCourant.description}}<br /><br />
+            Début du stage : {{stageCourant.dateDebut | date("d/m/Y")}}
+          </p>
+          <a href="{{path('prostages_stages', {'id': stageCourant.id})}}" class="btn btn-primary">Consulter le stage</a>
+        </div>
+      </div>
+      <br />
+    {% endfor %}
+{% endblock %}

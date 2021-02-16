@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}ProStages{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- AJOUT CSS -->
+        {% block stylesheets %}
+          <link href="{{asset('/css/bootstrap.css')}}" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+      <div class="container">
+
+        <!-- ENTETE TITRE ET LOGO -->
+        {% block entete %}
+          <div class="row">
+            <div class="col">
+              <br />
+              <h1>ProStages</h1>
+              <br />
+            </div>
+          </div>
+        {% endblock %}
+
+        <!-- MENU DE NAVIGATION -->
+        {% block menu %}
+        <div class="row">
+          <div class="col">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navigation</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                    <a class="nav-link" href="/">Accueil</a>
+                    <a class="nav-link" href="/entreprises">Entreprises</a>
+                    <a class="nav-link" href="/formations">Formations</a>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <br />
+        {% endblock %}
+
+        <!-- CONTENU DE LA PAGE A COMPLETER -->
+        {% block contenu %}
+        {% endblock %}
+
+        <!-- BAS DE PAGE -->
+        {% block footer %}
+          <br />
+          <div class="row">
+            <div class="col-6 offset-3">
+              <div class="card text-center">
+                <div class="card-header">
+                  © 2020 Copyright
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Tanguy Boscals de Réals</h5>
+                  <p class="card-text"><a href="https://github.com/tbdreals/prostages">Dépot GitHub</a></p>
+                  <a href="mailto:tbdreals@iutbayonne.univ-pau.fr" class="btn btn-primary">tbdreals@iutbayonne.univ-pau.fr</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endblock %}
+
+
+      </div>
+
+      <!-- AJOUT JAVASCRIPT -->
+      {% block javascripts %}
+        <script src="/js/bootstrap.min.js"></script>
+      {% endblock %}
+    </body>
+</html>
