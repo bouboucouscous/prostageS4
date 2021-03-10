@@ -34,6 +34,22 @@ class StageRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findStageByNomFormation($nom)
+    {   
+        //recupération de l entitte
+        $gestionnaireEntite=$this->getEntityManager();
+        //creation de la requete
+        $requete= $gestionnaireEntite->createQuery(
+            'SELECT s 
+            ROM App\Entity\Stage s
+            ORDER BY s.id
+            JOIN s.formation f
+            WHERE f.intitule = :nom'
+        );
+        $requete->setParameter('nom',$nom);
+        //execution et creation de la requete
+        return $requete->execute();
+    }
 
     /*
     public function findOneBySomeField($value): ?Stage

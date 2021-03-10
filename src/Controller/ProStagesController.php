@@ -67,20 +67,19 @@ class ProStagesController extends AbstractController
     }
 
     /**
-     * @Route("/entreprises/{id}", name="prostages_stagesParEntreprise")
+     * @Route("/entreprises/{nom}"", name="prostages_stagesParEntreprise")
      */
-    public function stagesParEntreprise(EntrepriseRepository $repositoryEntreprise, $id): Response
+    public function stagesParEntreprise(EntrepriseRepository $repositoryEntreprise, $nom): Response
     {
         // Je n'utilise plus le mécanisme d'injection de dépendances "poussée" afin de garder le code lisible.
         // On visualise mieux quelle recherche est appliquée sur le repository
         // Récupérer l'entreprises dont l'id a été fourni
-        $entreprise = $repositoryEntreprise->find($id);
+        $entreprise = $repositoryEntreprise->findStageByNomEntreprise($nom);
 
         // Envoi de l'entreprise à la vue chargée de l'affichage
         return $this->render('pro_stages/stagesParEntreprise.html.twig',
                               ['entreprise' => $entreprise]);
     }
-
     /**
      * @Route("/formations/{id}", name="prostages_stagesParFormation")
      */
@@ -93,4 +92,6 @@ class ProStagesController extends AbstractController
         return $this->render('pro_stages/stagesParFormation.html.twig',
                               ['formation' => $formation]);
     }
+
+
 }
