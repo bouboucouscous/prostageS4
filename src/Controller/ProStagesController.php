@@ -92,45 +92,68 @@ class ProStagesController extends AbstractController
             'filtrerPar' => $formation
         ]);
     }
-
-    /**
-     * @Route("/ajouter/entreprise", name="prostages_ajout_entreprise")
-     */
-
-    public function ajoutEntreprise(): Response
-    {
-        $entreprise = new Entreprise(); 
-
-        $formulaireEntreprise = $this->createFormBuilder($entreprise)
-        ->add('nom')
-        ->add('activite')
-        ->add('adresse')
-        ->getForm();
-
-
-        return $this->render('pro_stages/ajoutEntreprise.html.twig', [
-            'vueFormulaire' => $formulaireEntreprise->createView()
-        ]);
-    } 
-
     /**
      * * @Route("/ajouter/entreprise", name="prostages_ajouterEntreprise"))
      */
 
-    public function ajoutEntreprise(): Response
+    public function ajouterEntreprise(Request $request): Response
     {
         $entreprise = new Entreprise(); 
 
+        // Creation du formulaire d'une entreprise
         $formulaireEntreprise = $this->createFormBuilder($entreprise)
         ->add('nom')
         ->add('activite')
         ->add('adresse')
         ->getForm();
 
+        // Recuperation de la requete http
+        $formulaireEntreprise->handleRequest($request);
 
+        if ($formulaireEntreprise->isSubmitted() )
+        {
+            // Enregistrer l'entreprise en bd
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($entreprise);
+            $manager->flush();
+
+            return $this->redirectToRoute('openclassdut_filtrer');
+
+        }
         return $this->render('pro_stages/ajoutEntreprise.html.twig', [
-            'vueFormulaire' => $formulaireEntreprise->createView()
+            'vueFormulaire' => $formulaireEntreprise->createView(),
+            'action' => "creer"
         ]);
     }   
+
+      /**
+     * @Route("/modifier/entreprise/{id}", name="prostages_modifierEntreprise")
+     */
+
+    public function modifierEntreprise(Request $request, Entreprise $entreprise): Response
+    {
+
+        // Creation du formulaire d'une entreprise
+        $formulaireEntreprise = $this->createFormBuilder($entreprise)
+        ->add('nom')
+        ->add('activite')
+        ->add('adresse')
+        ->getForm();
+
+        // Recuperation de la requete http
+        $formulaireEntreprise->handleRequest($request);
+        if ($formulaireEntreprise->isSubmitted() )
+        {
+            // Enregistrer l'entreprise en bd
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($entreprise);
+            $manager->flush();
+
+        }
+        return $this->render('pro_stages/ajoutEntreprise.html.twig', [
+            'vueFormulaire' => $formulaireEntreprise->createView(),
+            'action' => "modifier"
+        ]);
+        } 
 
 }
