@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block titrePage %}	<!-- TITRE -->
+
+<h3> Filtrer </h3>
+
+{% endblock %}
+
+
+{% block contenuPage %}	<!-- CONTENU PAGE -->
+
+	<div class="row">
+		<!-- PAR FORMATION --> 	
+			<div class="col-md-6 col-sm-12" style="border:1px solid black;"> <!-- encadre en noir -->
+
+				<h3> Par formation </h3>		<!-- titre liste -->
+				
+				{% for formation in formations %}			
+					<!-- Affichage des elements de la liste -->
+		        	<li><a href="{{ path('prostages_stagesParFormation' , {'formation' : formation.Formation}) }}">{{ formation.Formation }}</a></li>
+				{% endfor %}
+
+			</div>
+
+
+
+			<!-- PAR ENTREPRISE --> 	
+			<div class="col-md-6 col-sm-12" style="border:1px solid black;"> <!-- encadre en noir -->
+
+				<h3> Par entreprise </h3>		<!-- titre liste -->
+				
+				{% for entreprise in entreprises %}			
+					<!-- Affichage des elements de la liste -->
+		        	<li>
+		        		<a href="{{ path('prostages_stagesParEntreprise' , {'nom' : entreprise.nom}) }}"> {{entreprise.nom}} </a>
+
+		        		&emsp;  <!-- Grand espace -->
+
+		        		<a href="{{ path('prostages_modifierEntreprise', {'id' : entreprise.id}) }}" style="text-decoration:none;"> &#x1F589 </a> 
+
+		  
+		        	</li>
+				{% endfor %}
+
+			</div>
+	</div>
+	
+
+
+{% endblock %}
