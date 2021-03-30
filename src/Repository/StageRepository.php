@@ -42,7 +42,7 @@ class StageRepository extends ServiceEntityRepository
         $requete= $gestionnaireEntite->createQuery(
             'SELECT s, f, e
             FROM Stage s
-            JOIN s.formation f
+            JOIN s.formations f
             JOIN s.entreprise e
             WHERE f.intitule = :nom'
         );
@@ -61,7 +61,7 @@ class StageRepository extends ServiceEntityRepository
             ->addSelect('e')
             ->addSelect('f')
             ->join('s.entreprise','e')
-            ->join('s.formation','f')
+            ->join('s.formations','f')
             ->andWhere('e.nom = :nomEntreprise')
             ->setParameter('nomEntreprise', $nomEntreprise)
             ->getQuery()
@@ -82,7 +82,7 @@ class StageRepository extends ServiceEntityRepository
         $requete = $entityManager->createQuery(
             'SELECT s
             FROM Stage s
-            JOIN s.formation f
+            JOIN s.formations f
             WHERE f.Formation = :nomFormation');
 
         // Definition de la valeur du parametre
@@ -99,7 +99,7 @@ class StageRepository extends ServiceEntityRepository
             ->addSelect('e')
             ->addSelect('f')
             ->join('s.entreprise','e')
-            ->join('s.formation','f')
+            ->join('s.formations','f')
             ->getQuery()
             ->getResult()
         ;

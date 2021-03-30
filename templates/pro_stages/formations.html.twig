@@ -22,7 +22,7 @@
               
               <p class="card-text">{{formationCourante.niveau}}<br />{{formationCourante.ville}} b</p>
               
-              <a href="/formations/{{formationCourante.nom}}">Consulter les stages  c</a>
+              <a href="{{ path( 'prostages_stagesParFormation', {'formation': formationCourante.intitule } ) }}">Consulter les stages  c</a>
              
             </div>
           </div>
