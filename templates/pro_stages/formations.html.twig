@@ -18,9 +18,12 @@
           {# Afficher une carte pour la formation courante #}
           <div class="card" style="width: 18rem;">
             <div class="card-body">
-              <h5 class="card-title">{{formationCourante.intitule}}</h5>
-              <p class="card-text">{{formationCourante.niveau}}<br />{{formationCourante.ville}}</p>
-              <a href="{{path('prostages_stagesParFormation', {'id': formationCourante.id})}}" class="btn btn-primary">Consulter les stages</a>
+              <h5 class="card-title">{{formationCourante.intitule}} a</h5>
+              
+              <p class="card-text">{{formationCourante.niveau}}<br />{{formationCourante.ville}} b</p>
+              
+              <a href="/formations/{{formationCourante.nom}}">Consulter les stages  c</a>
+             
             </div>
           </div>
 

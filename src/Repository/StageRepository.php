@@ -23,7 +23,7 @@ class StageRepository extends ServiceEntityRepository
         * @return Stage[] Returns an array of Stage objects
     */
 
-    public function findStageByNomEntreprise($nom)
+    public function findStageByNomEntreprise($nom): ?Stage
     {
         return $this->createQueryBuilder('s')
             ->join('s.entreprise','e')
@@ -34,21 +34,39 @@ class StageRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    public function findStageByNomFormation($nom)
+    public function findStageByNomFormation($nom): ?Stage
     {   
         //recupération de l entitte
-        $gestionnaireEntite=$this->getEntityManager();
+        $gestionnaireEntite=this.getEntityManager();
         //creation de la requete
         $requete= $gestionnaireEntite->createQuery(
-            'SELECT s 
-            ROM App\Entity\Stage s
-            ORDER BY s.id
+            'SELECT s, f, e
+            FROM App\Entity\Stage s
             JOIN s.formation f
+            JOIN s.entreprise e
             WHERE f.intitule = :nom'
         );
         $requete->setParameter('nom',$nom);
         //execution et creation de la requete
         return $requete->execute();
+    }
+
+    /**
+    * @return Stage[] Returns an array of Stage objects
+    */
+
+    public function findByEntreprise($nomEntreprise)
+    {
+        return $this->createQueryBuilder('s')
+            ->addSelect('e')
+            ->addSelect('f')
+            ->join('s.entreprise','e')
+            ->join('s.formation','f')
+            ->andWhere('e.nom = :nomEntreprise')
+            ->setParameter('nomEntreprise', $nomEntreprise)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /*
@@ -62,4 +80,41 @@ class StageRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+    * @return Stage[] Returns an array of Stage objects
+    */
+
+    public function findByFormation($nomFormation)
+    {
+        // Recuperer le gestionnaire d'entité
+
+        $entityManager = $this->getEntityManager();
+
+        // Construction de la requete
+        $requete = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Stage s
+            JOIN s.formation f
+            WHERE f.Formation = :nomFormation');
+
+        // Definition de la valeur du parametre
+        $requete->setParameter('nomFormation', $nomFormation);
+
+        // Retourner les resultats
+
+        return $requete->execute();
+    }
+
+    public function findAllOptimise()
+    {
+        return $this->createQueryBuilder('s')
+            ->addSelect('e')
+            ->addSelect('f')
+            ->join('s.entreprise','e')
+            ->join('s.formation','f')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

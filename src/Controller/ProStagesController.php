@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\HttpFoundation\Request; 
 use App\Entity\Stage;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
@@ -21,7 +21,7 @@ class ProStagesController extends AbstractController
     public function index(StageRepository $repositoryStage): Response
     {
         // Récupérer tous les stages enregistrés en BD
-         $stages = $repositoryStage->findAll();
+         $stages = $repositoryStage->findAllOptimise();
 
         // Envoyer les stages récupérés à la vue chargée de les afficher
         return $this->render('pro_stages/index.html.twig',
@@ -67,31 +67,70 @@ class ProStagesController extends AbstractController
     }
 
     /**
-     * @Route("/entreprises/{nom}"", name="prostages_stagesParEntreprise")
+     * @Route("/entreprise/{nom}", name="prostages_stagesParEntreprise")
      */
-    public function stagesParEntreprise(EntrepriseRepository $repositoryEntreprise, $nom): Response
-    {
-        // Je n'utilise plus le mécanisme d'injection de dépendances "poussée" afin de garder le code lisible.
-        // On visualise mieux quelle recherche est appliquée sur le repository
-        // Récupérer l'entreprises dont l'id a été fourni
-        $entreprise = $repositoryEntreprise->findStageByNomEntreprise($nom);
 
-        // Envoi de l'entreprise à la vue chargée de l'affichage
-        return $this->render('pro_stages/stagesParEntreprise.html.twig',
-                              ['entreprise' => $entreprise]);
+    public function stagesParEntreprise(StageRepository $stageRepo, $nom)
+    {
+        $stages = $stageRepo->findByEntreprise($nom);
+
+            return $this->render('pro_stages/index.html.twig', [
+            'stages' => $stages,
+            'filtrerPar' => $nom
+        ]);
     }
+     /**
+     * @Route("/formation/{formation}", name="prostages_stagesParFormation")
+     */
+
+    public function stagesParFormation(StageRepository $stageRepo, $formation)
+    {
+        $stages = $stageRepo->findByFormation($formation);
+
+            return $this->render('pro_stages/index.html.twig', [
+            'stages' => $stages,
+            'filtrerPar' => $formation
+        ]);
+    }
+
     /**
-     * @Route("/formations/{id}", name="prostages_stagesParFormation")
+     * @Route("/ajouter/entreprise", name="prostages_ajout_entreprise")
      */
-    public function stagesParFormation(FormationRepository $repositoryFormation, $id): Response
+
+    public function ajoutEntreprise(): Response
     {
-        // Récupérer la formation dont l'id a été fourni
-        $formation = $repositoryFormation->find($id);
+        $entreprise = new Entreprise(); 
 
-        // On envoie ces données à la vue chargée de l'affichage
-        return $this->render('pro_stages/stagesParFormation.html.twig',
-                              ['formation' => $formation]);
-    }
+        $formulaireEntreprise = $this->createFormBuilder($entreprise)
+        ->add('nom')
+        ->add('activite')
+        ->add('adresse')
+        ->getForm();
 
+
+        return $this->render('pro_stages/ajoutEntreprise.html.twig', [
+            'vueFormulaire' => $formulaireEntreprise->createView()
+        ]);
+    } 
+
+    /**
+     * * @Route("/ajouter/entreprise", name="prostages_ajouterEntreprise"))
+     */
+
+    public function ajoutEntreprise(): Response
+    {
+        $entreprise = new Entreprise(); 
+
+        $formulaireEntreprise = $this->createFormBuilder($entreprise)
+        ->add('nom')
+        ->add('activite')
+        ->add('adresse')
+        ->getForm();
+
+
+        return $this->render('pro_stages/ajoutEntreprise.html.twig', [
+            'vueFormulaire' => $formulaireEntreprise->createView()
+        ]);
+    }   
 
 }
