@@ -41,7 +41,7 @@ class StageRepository extends ServiceEntityRepository
         //creation de la requete
         $requete= $gestionnaireEntite->createQuery(
             'SELECT s, f, e
-            FROM App\Entity\Stage s
+            FROM Stage s
             JOIN s.formation f
             JOIN s.entreprise e
             WHERE f.intitule = :nom'
@@ -68,19 +68,6 @@ class StageRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    /*
-    public function findOneBySomeField($value): ?Stage
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-
     /**
     * @return Stage[] Returns an array of Stage objects
     */
@@ -94,7 +81,7 @@ class StageRepository extends ServiceEntityRepository
         // Construction de la requete
         $requete = $entityManager->createQuery(
             'SELECT s
-            FROM App\Entity\Stage s
+            FROM Stage s
             JOIN s.formation f
             WHERE f.Formation = :nomFormation');
 
