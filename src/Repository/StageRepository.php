@@ -34,6 +34,9 @@ class StageRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+     /**
+    * @return Stage[] Returns an array of Stage objects
+    */
     public function findStageByNomFormation($nom): ?Stage
     {   
         //recupération de l entitte
@@ -41,7 +44,7 @@ class StageRepository extends ServiceEntityRepository
         //creation de la requete
         $requete= $gestionnaireEntite->createQuery(
             'SELECT s, f, e
-            FROM Stage s
+            FROM App\Entity\Stage s
             JOIN s.formations f
             JOIN s.entreprise e
             WHERE f.intitule = :nom'
@@ -81,10 +84,10 @@ class StageRepository extends ServiceEntityRepository
         // Construction de la requete
         $requete = $entityManager->createQuery(
             'SELECT s, f, e
-            FROM Stage s
+            FROM App\Entity\Stage s
             JOIN s.formations f
             JOIN s.entreprise e
-            WHERE f.Formation = :nomFormation');
+            WHERE f.intitule = :nomFormation');
 
         // Definition de la valeur du parametre
         $requete->setParameter('nomFormation', $nomFormation);
@@ -93,6 +96,10 @@ class StageRepository extends ServiceEntityRepository
 
         return $requete->execute();
     }
+
+     /**
+    * @return Stage[] Returns an array of Stage objects
+    */
 
     public function findAllOptimise()
     {

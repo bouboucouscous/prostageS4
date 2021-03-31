@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block titrePage %}	<!-- TITRE -->
+{% block entete %}	<!-- TITRE -->
 
 <h3> Filtrer </h3>
 
 {% endblock %}
 
 
-{% block contenuPage %}	<!-- CONTENU PAGE -->
+{% block contenu %}	<!-- CONTENU PAGE -->
 
 	<div class="row">
 		<!-- PAR FORMATION --> 	
@@ -17,7 +17,7 @@
 				
 				{% for formation in formations %}			
 					<!-- Affichage des elements de la liste -->
-		        	<li><a href="{{ path('prostages_stagesParFormation' , {'formation' : formation.Formation}) }}">{{ formation.Formation }}</a></li>
+		        	<li><a href="{{ path('prostages_filtrer' , {'formations' : formation.intitule}) }}">{{ formation.intitule }}</a></li>
 				{% endfor %}
 
 			</div>

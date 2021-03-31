@@ -103,7 +103,7 @@ class ProStagesController extends AbstractController
         // Creation du formulaire d'une entreprise
         $formulaireEntreprise = $this->createFormBuilder($entreprise)
         ->add('nom')
-        ->add('activite')
+        ->add('siteWeb')
         ->add('adresse')
         ->getForm();
 
@@ -136,7 +136,7 @@ class ProStagesController extends AbstractController
         // Creation du formulaire d'une entreprise
         $formulaireEntreprise = $this->createFormBuilder($entreprise)
         ->add('nom')
-        ->add('activite')
+        ->add('siteWeb')
         ->add('adresse')
         ->getForm();
 
