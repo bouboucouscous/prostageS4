@@ -53,7 +53,7 @@ class Stage
     private $emailEntreprise;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Formation::class, inversedBy="stages"
+     * @ORM\ManyToMany(targetEntity=Formation::class, inversedBy="stages")
      * @Assert\Count(
      *      min=1,
      *      minMessage = "Veuillez choisir au moins une formation.")

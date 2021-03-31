@@ -100,7 +100,7 @@ class ProStagesController extends AbstractController
      * * @Route("/ajouter/entreprise", name="prostages_ajouterEntreprise"))
      */
 
-    public function ajouterEntreprise(Request $request): Response
+    public function ajouterEntreprise(Request $request, EntityManagerInterface $manager): Response
     {
         $entreprise = new Entreprise(); 
 
@@ -113,7 +113,6 @@ class ProStagesController extends AbstractController
         if ($formulaireEntreprise->isSubmitted()&& $formulaireEntreprise->isValid() )
         {
             // Enregistrer l'entreprise en bd
-            $manager = $this->getDoctrine()->getManager();
             $manager->persist($entreprise);
             $manager->flush();
 
@@ -130,7 +129,7 @@ class ProStagesController extends AbstractController
      * @Route("/modifier/entreprise/{id}", name="prostages_modifierEntreprise")
      */
 
-    public function modifierEntreprise(Request $request, Entreprise $entreprise): Response
+    public function modifierEntreprise(Request $request, Entreprise $entreprise, EntityManagerInterface $manager): Response
     {
 
         // Creation du formulaire d'une entreprise
@@ -141,7 +140,6 @@ class ProStagesController extends AbstractController
         if ($formulaireEntreprise->isSubmitted()&& $formulaireEntreprise->isValid() )
         {
             // Enregistrer l'entreprise en bd
-            $manager = $this->getDoctrine()->getManager();
             $manager->persist($entreprise);
             $manager->flush();
             return $this->redirectToRoute('prostages_filtrer');
