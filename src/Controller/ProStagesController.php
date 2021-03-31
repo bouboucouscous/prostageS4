@@ -154,6 +154,23 @@ class ProStagesController extends AbstractController
             'vueFormulaire' => $formulaireEntreprise->createView(),
             'action' => "modifier"
         ]);
-        }
+    }
+
+    /**
+     * @Route("/filtrer", name="prostages_filtrer")
+     */
+    public function filtrer(EntrepriseRepository $entrepriseRepo, 
+                            FormationRepository $formationRepo): Response
+    {
+        $entreprises = $entrepriseRepo->findAll();
+        $formations = $formationRepo->findAll();
+
+        return $this->render('pro_stages/filtrer.html.twig', [
+            'entreprises' => $entreprises,
+            'formations' => $formations 
+
+        ]);    }
+
+    
 
 }

@@ -80,9 +80,10 @@ class StageRepository extends ServiceEntityRepository
 
         // Construction de la requete
         $requete = $entityManager->createQuery(
-            'SELECT s
+            'SELECT s, f, e
             FROM Stage s
             JOIN s.formations f
+            JOIN s.entreprise e
             WHERE f.Formation = :nomFormation');
 
         // Definition de la valeur du parametre
