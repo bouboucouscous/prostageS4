@@ -13,8 +13,8 @@ use App\Repository\StageRepository;
 use App\Repository\EntrepriseRepository;
 use App\Repository\FormationRepository;
 use App\Form\EntrepriseType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use App\Form\StageType;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class ProStagesController extends AbstractController
@@ -105,11 +105,7 @@ class ProStagesController extends AbstractController
         $entreprise = new Entreprise(); 
 
         // Creation du formulaire d'une entreprise
-        $formulaireEntreprise = $this->createFormBuilder($entreprise)
-        ->add('nom', TextType::class)
-        ->add('adresse',TextType::class)
-        ->add('siteWeb', UrlType::class)
-        ->getForm();
+        $formulaireEntreprise = $this->createForm(EntrepriseType::class, $entreprise);
 
         // Recuperation de la requete http
         $formulaireEntreprise->handleRequest($request);
@@ -138,11 +134,7 @@ class ProStagesController extends AbstractController
     {
 
         // Creation du formulaire d'une entreprise
-        $formulaireEntreprise = $this->createFormBuilder($entreprise)
-        ->add('nom')
-        ->add('siteWeb')
-        ->add('adresse')
-        ->getForm();
+        $formulaireEntreprise = $this->createForm(EntrepriseType::class, $entreprise);
 
         // Recuperation de la requete http
         $formulaireEntreprise->handleRequest($request);
@@ -175,6 +167,31 @@ class ProStagesController extends AbstractController
 
         ]);    }
 
-    
+    /**
+     * @Route("/ajouter/stage", name="prostages_ajouterStage")
+     */
+
+    public function ajouterStage(Request $request, EntityManagerInterface $manager): Response
+    {
+        $stage = new Stage(); 
+
+        // Creation du formulaire d'un stage
+        $formStage = $this->createForm(StageType::class, $stage);
+
+        // Recuperation de la requete http
+        $formStage->handleRequest($request);
+
+        if ($formStage->isSubmitted() && $formStage->isValid()  )
+        {
+            // Enregistrer le stage en bd
+            $manager->persist($stage);
+            $manager->flush();
+            return $this->redirectToRoute('prostages_accueil');
+        }
+        return $this->render('pro_stages/ajoutStage.html.twig', [
+            'form' => $formStage->createView()
+        ]);
+
+    }
 
 }

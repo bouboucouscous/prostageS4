@@ -6,7 +6,7 @@ use App\Repository\StageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=StageRepository::class)
  */
@@ -21,6 +21,7 @@ class Stage
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $intitule;
 
@@ -46,16 +47,23 @@ class Stage
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email
+     * @Assert\NotBlank
      */
     private $emailEntreprise;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Formation::class, inversedBy="stages")
+     * @ORM\ManyToMany(targetEntity=Formation::class, inversedBy="stages"
+     * @Assert\Count(
+     *      min=1,
+     *      minMessage = "Veuillez choisir au moins une formation.")
      */
     private $formations;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="stages")
+     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="stages", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
      */
     private $entreprise;
 
