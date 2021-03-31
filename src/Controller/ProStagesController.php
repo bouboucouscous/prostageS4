@@ -12,6 +12,8 @@ use App\Entity\Formation;
 use App\Repository\StageRepository;
 use App\Repository\EntrepriseRepository;
 use App\Repository\FormationRepository;
+use App\Form\EntrepriseType;
+
 
 class ProStagesController extends AbstractController
 {
@@ -103,14 +105,14 @@ class ProStagesController extends AbstractController
         // Creation du formulaire d'une entreprise
         $formulaireEntreprise = $this->createFormBuilder($entreprise)
         ->add('nom')
-        ->add('siteWeb')
         ->add('adresse')
+        ->add('siteWeb')
         ->getForm();
 
         // Recuperation de la requete http
         $formulaireEntreprise->handleRequest($request);
 
-        if ($formulaireEntreprise->isSubmitted() )
+        if ($formulaireEntreprise->isSubmitted()&& $formulaireEntreprise->isValid() )
         {
             // Enregistrer l'entreprise en bd
             $manager = $this->getDoctrine()->getManager();
@@ -142,7 +144,7 @@ class ProStagesController extends AbstractController
 
         // Recuperation de la requete http
         $formulaireEntreprise->handleRequest($request);
-        if ($formulaireEntreprise->isSubmitted() )
+        if ($formulaireEntreprise->isSubmitted()&& $formulaireEntreprise->isValid() )
         {
             // Enregistrer l'entreprise en bd
             $manager = $this->getDoctrine()->getManager();

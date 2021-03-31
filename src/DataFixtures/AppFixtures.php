@@ -34,7 +34,7 @@ class AppFixtures extends Fixture
         $ArcadeAndCo -> setNom("ArcadeAndCo");
         $ArcadeAndCo -> setAdresse("2 allée du Parc Montaury, 64600 ANGLET");
         $ArcadeAndCo -> setSiteWeb("https://www.arcadeandco.fr");
-
+        $entreprise->setSiteWeb($faker->url);
         // On stocke les entreprises dans un tableau
         $tableauEntreprises = array($total, $safran, $ArcadeAndCo);
 
