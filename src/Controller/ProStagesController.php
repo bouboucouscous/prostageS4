@@ -97,7 +97,7 @@ class ProStagesController extends AbstractController
         ]);
     }
     /**
-     * * @Route("/ajouter/entreprise", name="prostages_ajouterEntreprise"))
+     * * @Route("/admin/ajouter/entreprise", name="prostages_ajouterEntreprise"))
      */
 
     public function ajouterEntreprise(Request $request, EntityManagerInterface $manager): Response
@@ -126,7 +126,7 @@ class ProStagesController extends AbstractController
     }   
 
       /**
-     * @Route("/modifier/entreprise/{id}", name="prostages_modifierEntreprise")
+     * @Route("/admin/modifier/entreprise/{id}", name="prostages_modifierEntreprise")
      */
 
     public function modifierEntreprise(Request $request, Entreprise $entreprise, EntityManagerInterface $manager): Response
