@@ -42,7 +42,31 @@
                     <a class="nav-link" href="/formations">Formations</a>
                     <a class="nav-link" href="{{ path('prostages_filtrer') }}">Filtrer</a>
                     <a class="nav-link" href="{{ path('prostages_ajouterEntreprise')}}">Ajouter une entreprise</a>
-                     <a class="nav-link" href="{{ path('prostages_ajouterStage')}}">Ajouter un stage</a>
+                    <a class="nav-link" href="{{ path('prostages_ajouterStage')}}">Ajouter un stage</a>
+                    <a class="nav-link" href="{{path('app_inscription')}}">Inscription </a>
+                    {# Fonctionnalités pour l'utilsateur authentifié #}
+                    {% if is_granted('ROLE_USER') %}                      
+                        <a class="nav-link" href="{{path('app_logout')}}">
+                          {{ app.user.prenom }} {{ app.user.nom }}
+                          <i class="icon-user"></i>
+                          Déconnexion
+                        </a>
+                      {% else %}
+                      {# Fonctionnalités pour l'utilsateur NON authentifié #}
+                        <a class="nav-link" href="{{path('app_login')}}">
+                          <i class="icon-user"></i>
+                          Connexion  
+                        </a>                     
+                      {% endif %}
+                      {# Fonctionnalités pour l'administrateur #}
+                      {% if is_granted('ROLE_ADMIN') %}
+                        <a class="nav-link" href="{{path('module_index')}}">
+                          <i class="icon-plus-1"></i>
+                          Gérer les modules                          
+                        </a>
+                      {% endif %}
+                      <a class="nav-link" href="{{ path('formation_index')}}">Gérer les formations</a>
+ 
                   </div>
                 </div>
               </div>
