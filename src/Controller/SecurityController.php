@@ -42,7 +42,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/inscription", name="app_inscription")
      */
-    public function inscription(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function inscription(Request $request,  UserPasswordEncoderInterface $encoder)
     {
         //Créer un utilisateur vide
         $utilisateur = new User();
@@ -65,8 +65,8 @@ class SecurityController extends AbstractController
             $utilisateur->setPassword($encodagePassword);
 
             // Enregistrer l'utilisateur en base de données
-            $manager->persist($utilisateur);
-            $manager->flush();
+           // $manager->persist($utilisateur);
+            //$manager->flush();
 
             // Rediriger l'utilisateur vers la page de login
             return $this->redirectToRoute('app_login');

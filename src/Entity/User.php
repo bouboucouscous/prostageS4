@@ -20,14 +20,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank
+     *  @Assert\Email(
+     *     message = "Cette adresse email est invalide.")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Assert\Email(
-     *     message = "Cette adresse email est invalide.")
      */
     private $roles = [];
 
@@ -114,5 +113,9 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+    public function __toString()
+    {
+      return $this->getPrenom()." ".$this->getNom();
     }
 }
